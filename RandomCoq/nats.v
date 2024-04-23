@@ -71,3 +71,51 @@ Proof.
   (* or better: *)
   intros [] [] H; inversion H; reflexivity.
 Qed.
+
+
+Theorem zero_identity_l : ∀ a : nat, 0 + a = a.
+Proof.
+  simpl.
+  reflexivity.
+Qed.
+
+Theorem zero_identity_r : ∀ a : nat, a + 0 = a.
+Proof.
+  intros a.
+  induction a as [|n' IHn'].
+  - reflexivity.
+  - simpl. rewrite -> IHn'. reflexivity.
+Qed.
+
+Theorem someth0 : ∀ a b : nat, S a + b = S (a + b).
+Proof.
+  intros ab.
+  reflexivity.
+Qed.
+
+Theorem someth1 : ∀ a b : nat, a + S b = S (a + b).
+Proof.
+  intros a b.
+  induction a as [|n' IHn'].
+  - rewrite -> zero_identity_l. rewrite -> zero_identity_l. reflexivity.
+  - rewrite -> someth0. rewrite -> someth0. rewrite -> IHn'. reflexivity.
+Qed.
+
+Theorem plus_commutative : ∀ a b : nat, a + b = b + a.
+Proof.
+  intros a b.
+  induction a as [| n' IHn'].
+  - rewrite -> zero_identity_l. rewrite -> zero_identity_r. reflexivity.
+  - simpl. rewrite -> someth1. rewrite -> IHn'. reflexivity.
+Qed.
+
+
+Theorem plus_associative : ∀ a b c : nat, (a + b) + c = a + (b + c).
+Proof.
+  intros a b c.
+  induction a as [|n' IHn'].
+  - rewrite -> zero_identity_l. rewrite -> zero_identity_l. reflexivity.
+    (* - rewrite -> someth0. rewrite -> someth0. rewrite -> someth0. rewrite -> IHn'. reflexivity. *)
+  - simpl. rewrite -> IHn'. reflexivity.
+Qed.
+
