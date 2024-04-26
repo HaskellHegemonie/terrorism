@@ -158,7 +158,7 @@ Proof.
   reflexivity.
 Qed.
 
- (* all of following to prove commutativity of * may be possible in fewer steps (maybe ~simpl.~ does more for you?) *)
+ (* all of the following to prove the commutativity of * may be possible in fewer steps (maybe ~simpl.~ does more for you?) *)
 
 Theorem mul_zero_l : ∀ x : nat, 0 * x = 0.
 Proof.
