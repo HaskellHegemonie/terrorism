@@ -112,7 +112,7 @@ Definition minustwo (a : nat) :=
 
 Example trans_eq_exercise : ∀ (a b c d : nat),
     (a + b) = c →
-     c = (minustwo d) →
+    c = (minustwo d) →
     (a + b) = (minustwo d).
 Proof.
   intros a b c d.
@@ -170,7 +170,7 @@ Proof.
   rewrite H'. rewrite H''.
   reflexivity.
 Qed.
-  
+
 Theorem discriminate_ex1 : ∀ (n m : nat),
     false = true →
     n = m.
@@ -299,3 +299,62 @@ Abort.
 (*      + discriminate eq. *)
 (*     + f_equal. apply IHn'. simpl in eq. injection eq as goal. apply goal. *)
 
+
+
+(* casually skipping the most important parts... *)
+
+Definition square n : nat := n * n.
+
+Lemma square_mult : ∀ n m : nat, square (n * m) = square n * square m.
+Proof.
+  intros n m.
+  unfold square.
+  assert (I: n * m * n = n * n * m). { Search "*". rewrite Nat.mul_comm. apply Nat.mul_assoc. }
+  rewrite Nat.mul_assoc.
+  rewrite Nat.mul_assoc.
+  rewrite I.
+  reflexivity.
+Qed.
+
+Definition foo (x : nat) : nat := 5.
+
+Fact silly_fact_1 : ∀ m, foo m + 1 = foo (m + 1) + 1.
+Proof.
+  simpl.
+  reflexivity.
+Qed.
+
+Definition bar (x : nat) : nat :=
+  match x with
+  | O => 5
+  | S _ => 5
+  end.
+
+Fact silly_fact_2 : ∀ m : nat, bar m + 1 = bar (m + 1) + 1.
+Proof.
+  intros m.
+  unfold bar.
+  destruct m eqn:E; simpl; reflexivity.
+Qed.
+
+Definition sillyfun (n : nat) : bool :=
+  if n =? 3 then false
+  else if n =? 5 then false
+  else false.
+
+Theorem sillyfun_false : ∀ (n : nat), sillyfun n = false.
+Proof.
+  intros n.
+  unfold sillyfun.
+  destruct (n =? 3).
+  - reflexivity.
+  - destruct (n =? 5); reflexivity.
+Qed.
+
+(* Fixpoint split {X Y : Type} (l : list (X × Y)) : list X × list Y := *)
+(*   match l with *)
+(*   | [] => ([], []) *)
+(*   | (x, y) :: l' => match split l' with *)
+(*                     | x', y' => (x :: x', y :: y') *)
+(*                     end *)
+(*   end. *)
