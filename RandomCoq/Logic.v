@@ -1,4 +1,5 @@
 From Coq Require Import Unicode.Utf8.
+From Coq Require Import Nat.
 Example and_exercise :
   ∀ n m : nat, n + m = 0 → n = 0 ∧ m = 0.
 Proof.
@@ -267,3 +268,48 @@ Proof.
 Qed.
 (* https://www.youtube.com/watch?v=HvOCttTKZwk *)
 (* your mama's a setoid *)
+
+Definition Even (n : nat) := ∃ x : nat, n = double x.
+Theorem four_is_Even : Even 4.
+Proof.
+  unfold Even.
+  exists 2.
+  reflexivity.
+Qed.
+
+Theorem exists_example_2 : ∀ n,
+  (∃ m, n = 4 + m) →
+  (∃ o, n = 2 + o).
+Proof.
+  intros n [m H].
+  exists (2 + m).
+  apply H.
+Qed.
+
+Theorem dist_not_exists : ∀ (X:Type) (P : X → Prop),
+    (∀ x, P x) → ¬ (∃ x, ¬ P x).
+  intros x p H.
+  unfold not.
+  intros [x0 I].
+  apply I, H.
+Qed.
+
+Theorem dist_exists_or : ∀ (X:Type) (P Q : X → Prop),
+    (∃ x, P x ∨ Q x) ↔ (∃ x, P x) ∨ (∃ x, Q x).
+Proof.
+  intros x p q.
+  split.
+  - intros [x0 [H | H] ].
+    + left.  exists x0. apply H.
+    + right. exists x0. apply H.
+  - intros [[x0 H] | [x0 H]].
+    + exists x0. left. apply H.
+    + exists x0. right. apply H.
+Qed.
+
+(* Theorem leb_plus_exists : ∀ n m, n <=? m = true → ∃ x, m = n+x. *)
+(* Proof. *)
+(*   intros n m H. *)
+(*   induction n. *)
+(*   - exists m. reflexivity. *)
+(*   - intros. exists . *)
