@@ -1,5 +1,6 @@
 From Coq Require Import Unicode.Utf8.
 From Coq Require Import Nat.
+From Coq Require Import List.
 Example and_exercise :
   ∀ n m : nat, n + m = 0 → n = 0 ∧ m = 0.
 Proof.
@@ -313,3 +314,10 @@ Qed.
 (*   induction n. *)
 (*   - exists m. reflexivity. *)
 (*   - intros. exists . *)
+
+Fixpoint In { X : Type } (x : X) (l : list X) : Prop :=
+  match l with
+  | nil => False
+  | y :: ys => x = y ∨ In x ys
+  end.
+  

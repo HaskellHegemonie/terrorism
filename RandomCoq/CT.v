@@ -1,5 +1,5 @@
 From Coq Require Import Unicode.Utf8.
-Require Import Category.Theory.
+Require Category Import Category.Theory.
 (* Variables A B C : Prop. *)
 (* Check (A → B). *)
 (* Goal (A → B → C) → (A → B) → A → C. *)

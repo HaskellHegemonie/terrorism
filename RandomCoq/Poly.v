@@ -116,27 +116,28 @@ Proof.
   - simpl. rewrite -> IHy'. reflexivity.
 Qed.
 
-Theorem app_assoc : ∀ X : Type, ∀ a b c : list X, (a ++ b) ++ c = a ++ (b ++ c).
-Proof.
-  intros X a b c.
-  induction a as [|y ys IHy'].
-  (* don't know why reflexivity doesn't work, shows a "%" symbol  *)
-  - simpl. reflexivity.
-  - simpl.  rewrite -> IHy'. reflexivity.
-Qed.
+(* Theorem app_assoc : ∀ X : Type, ∀ a b c : list X, (a ++ b) ++ c = a ++ (b ++ c). *)
+(* Proof. *)
+(*   intros X a b c. *)
+(*   induction a as [|y ys IHy']. *)
+(*   (* don't know why reflexivity doesn't work, shows a "%" symbol  *) *)
+(*   - simpl. reflexivity. *)
+(*   - simpl.  rewrite -> IHy'. reflexivity. *)
+(* Qed. *)
 
-Lemma app_length : ∀ X : Type, ∀ l0 l1 : list X, length (l0 ++ l1) = length l0 + length l1.
-Proof.
-  intros X l0 l1.
-  induction l0 as [|y ys IHy'].
-  - simpl. reflexivity.
-  - simpl. rewrite -> IHy'.  reflexivity.
-Qed.
+(* Lemma app_length : ∀ X : Type, ∀ l0 l1 : list X, length (l0 ++ l1) = length l0 + length l1. *)
+(* Proof. *)
+(*   intros X l0 l1. *)
+(*   induction l0 as [|y ys IHy']. *)
+(*   - simpl. reflexivity. *)
+(*   - simpl. rewrite -> IHy'.  reflexivity. *)
+(* Qed. *)
 
-Theorem rev_app_distr : ∀ X (l1 l2 : list X), rev (l1 ++ l2) = rev l2 ++ rev l1.
-Proof.
-  intros X l1 l2.
-  induction l1 as [| y ys IHy'].
-  - simpl. rewrite -> app_nil_r. reflexivity.
-  - simpl. rewrite -> IHy'. rewrite -> app_assoc.
+(* Theorem rev_app_distr : ∀ X (l1 l2 : list X), rev (l1 ++ l2) = rev l2 ++ rev l1. *)
+(* Proof. *)
+(*   intros X l1 l2. *)
+(*   induction l1 as [| y ys IHy']. *)
+(*   - simpl. rewrite -> app_nil_r. reflexivity. *)
+(*   - simpl. rewrite -> IHy'. rewrite -> app_assoc. *)
     
+

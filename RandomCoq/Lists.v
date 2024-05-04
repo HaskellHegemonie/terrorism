@@ -1,4 +1,4 @@
-From Coq Require Import Unicode.Utf8.
+From Coq Require Export Unicode.Utf8.
 Inductive natprod : Type :=
 | pair (n1 n2 : nat).
 
@@ -153,4 +153,4 @@ Proof.
   induction l1 as [|hed tayl IHl'].
   - simpl. reflexivity.
   - simpl. rewrite -> IHl'. reflexivity.
-    
+Qed.
