@@ -1,4 +1,5 @@
 From Coq Require Export Unicode.Utf8.
+From Coq Require Export List.
 Inductive natprod : Type :=
 | pair (n1 n2 : nat).
 

@@ -1,3 +1,8 @@
 /PDF.v
 /Tut.v
 /Intro.coq
+/*.aux
+/*.vo
+/*.vok
+/*.glob
+/*.vos
