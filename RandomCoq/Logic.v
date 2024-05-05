@@ -311,9 +311,30 @@ Qed.
 (* Theorem leb_plus_exists : ∀ n m, n <=? m = true → ∃ x, m = n+x. *)
 (* Proof. *)
 (*   intros n m H. *)
-(*   induction n. *)
+(*   destruct H as [|Hle]. *)
 (*   - exists m. reflexivity. *)
-(*   - intros. exists . *)
+(*   - intros.  *)
+
+Theorem assoc_plus_minus : ∀ n m u : nat,
+    (* u <=? m = true → *) n + (m - u) = n + m - u.
+Proof.
+  intros.
+  induction n.
+  simpl. reflexivity.
+  simpl. rewrite IHn.
+  destruct u.
+  - Search "-". rewrite PeanoNat.Nat.sub_0_r. reflexivity.
+  - Search "-".
+Admitted.
+
+Theorem leb_plus_exists : forall n m, n <=? m = true -> exists x, m = n + x.
+Proof.
+  intros n m H.
+  exists (m - n).
+  induction n.
+  - simpl. rewrite PeanoNat.Nat.sub_0_r. reflexivity.
+  - simpl. Search "-". rewrite assoc_plus_minus. 
+Admitted.  
 
 Fixpoint In { X : Type } (x : X) (l : list X) : Prop :=
   match l with
@@ -321,3 +342,6 @@ Fixpoint In { X : Type } (x : X) (l : list X) : Prop :=
   | y :: ys => x = y ∨ In x ys
   end.
   
+Theorem plus_exists_leb : ∀ n m, (∃ x, m = n+x) → n <=? m = true.
+Proof.
+  intros n m [x H].
