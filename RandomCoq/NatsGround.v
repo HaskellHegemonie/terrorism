@@ -10,6 +10,17 @@ From Coq Require Import Unicode.Utf8.
 (*   | S n' => S (add n' m) *)
 (*   end. *)
 
+Theorem plus_n_O : ∀ n : nat, plus n O = n.
+Proof.
+  intros n.
+  induction n.
+  (* 0 + x = x *)
+  - unfold plus. reflexivity.
+  (* S x + y = S (x + y) *)
+  - unfold plus. fold plus. rewrite IHn. reflexivity.
+Qed.
+  
+
 Theorem plus_0_n : ∀ n : nat, plus 0  n = n.
 Proof.
   intros n.
