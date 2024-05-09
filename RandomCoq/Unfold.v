@@ -31,6 +31,7 @@ Proof.
   - unfold id_nat. reflexivity.
   (* https://coq.inria.fr/doc/v8.13/refman/proofs/writing-proofs/rewriting.html#grammar-token-reference_occs *)
   (* why does this work? *)
+  (* - cbn. *)
+  (* - pattern id_nat. *)
   - unfold id_nat. fold id_nat. rewrite <- IHn. reflexivity.
 Qed.
-
