@@ -1,6 +1,7 @@
 From Coq Require Import Unicode.Utf8.
 From Coq Require Import List.
 From Coq Require Import Nat.
+From Coq Require Import Bool.
 
 Theorem listx0 : ∀ { X : Type} (l0 l1 : list X),
     rev (l0 ++ l1) = rev l1 ++ rev l0.
@@ -127,3 +128,57 @@ Proof.
   destruct b. reflexivity. exfalso. apply H. reflexivity.
 Qed.
 
+
+
+Theorem and_assoc : ∀ a b c : bool,
+    a && (b && c) = (a && b) && c.
+Proof.
+  intros [] [] []; reflexivity; discriminate.
+Qed.
+
+Check bool_ind.
+
+
+Definition notb (b : bool) : bool :=
+  match b with
+  | false => true
+  | true => false
+  end.
+
+Theorem not_twice : ∀ a : bool,
+    notb (notb a) = a.
+Proof.
+  apply bool_ind; reflexivity.
+Qed.
+
+
+
+
+
+
+Fixpoint half (n : nat) :=
+  match n with
+  | O => O
+  | S O => O
+  | S (S n) => S (half n)
+  end.
+
+Compute half 5.
+Definition even (n : nat) : Prop := ∃ m : nat, double (half m) = n.
+
+
+Theorem zero_true : even O.
+Proof.
+  unfold even.
+  exists O.
+  reflexivity.
+Qed.
+
+  
+Theorem example : ∀ (P Q : Prop),
+    (P → Q) → (¬ Q → ¬ P).
+Proof.
+  unfold not.
+  intros.
+  apply H0, H, H1.
+Qed.
