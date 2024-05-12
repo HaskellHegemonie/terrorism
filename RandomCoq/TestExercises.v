@@ -182,3 +182,15 @@ Proof.
   intros.
   apply H0, H, H1.
 Qed.
+
+Theorem ex1 : ∀ n m : nat,
+    n <=? m = true → ∃ k : nat, m = n + k.
+Proof.
+  induction n.
+  - intros. exists m. reflexivity.
+  - intros. induction m.
+    + discriminate H.
+    + simpl in H. apply IHn in H. destruct H as [k  H].
+      exists k. simpl. rewrite <- H. reflexivity.
+Qed.
+
