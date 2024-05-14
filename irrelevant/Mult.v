@@ -29,27 +29,32 @@ Proof.
   - reflexivity.
   - simpl. rewrite IHn. rewrite <- (plus_assoc (m + o) (n * m) (n * o)).
     rewrite <- (plus_assoc (m + n * m) o (n * o)).
-    rewrite (plus_comm (m + o + n * m) (n * o)).
-    rewrite (plus_comm (m + n * m + o) (n * o)).
-    apply (functions _ _ (plus (mult n o))).
-    rewrite plus_assoc.
-    rewrite plus_assoc.
-    apply (functions _ _ (plus m)), plus_comm.
+    (* rewrite (plus_comm (m + o + n * m) (n * o)). *)
+    rewrite (plus_comm m (n * m)).
+    rewrite (plus_comm (m + o) (n * m)).
+    rewrite <- plus_assoc.
+    reflexivity.
 Qed.
 
+Theorem plus_mult_ring : ∀ n m o : nat,
+    (n + m) * o = n * o + m * o.
+Proof.
+  intros.
+  rewrite mult_comm.
+  rewrite mult_plus_ring.
+  rewrite mult_comm.
+  rewrite (mult_comm o m).
+  reflexivity.
+Qed.
 
 Theorem mult_assoc : ∀ n m o : nat,
     (n * m) * o = n * (m * o).
 Proof.
+  intros.
   induction n.
   - reflexivity.
-  - intros. simpl. rewrite mult_comm.
+  - simpl. 
     rewrite <- IHn.
-    rewrite mult_plus_ring.
-    rewrite mult_comm.
-    rewrite (plus_comm (m * o) ).
-    rewrite (plus_comm (m * o) ).
-    rewrite (mult_comm o (n * m)).
+    rewrite plus_mult_ring.
     reflexivity.
 Qed.
-    
